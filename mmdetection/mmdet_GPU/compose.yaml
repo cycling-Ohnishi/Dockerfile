@@ -1,0 +1,23 @@
+services:
+  mmdet:
+    build:
+      context: .
+    image: my/mmdet:3.3.0
+    container_name: mmdet
+    hostname: mmdet
+    working_dir: /home
+    tty: true
+    shm_size: 4gb
+    volumes:
+      - ./share:/home/share
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
