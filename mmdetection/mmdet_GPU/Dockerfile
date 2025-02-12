@@ -11,7 +11,7 @@ SHELL ["/bin/bash", "-c"]
 RUN <<EOT
 apt update
 apt install -y vim wget curl git libgl1-mesa-glx libglib2.0-0
-apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev libssl-dev
+apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libreadline-dev libffi-dev libsqlite3-dev libbz2-dev libssl-dev ninja-build
 wget https://www.python.org/ftp/python/3.11.11/Python-3.11.11.tgz
 tar xf Python-3.11.11.tgz && cd Python-3.11.11
 ./configure --enable-optimizations
@@ -25,6 +25,7 @@ EOT
 RUN <<EOT
 cd /home
 python -m venv mmdet-env && source mmdet-env/bin/activate
+echo "source /home/mmdet-env/bin/activate" >> /root/.bashrc
 git clone https://github.com/open-mmlab/mmdetection.git
 python -m pip install wheel setuptools
 python -m pip install torch torchvision
